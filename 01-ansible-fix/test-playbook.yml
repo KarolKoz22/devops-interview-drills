@@ -1,0 +1,34 @@
+---
+- name: run a webserver
+  gather_facts: no
+  hosts: k8s-worker1 
+  handlers:
+    - name: debug message
+      debug:
+        msg: installing httpd 
+  task:
+    - name: installing httpd
+      ansible.builtin.apt:
+        name: httpd
+        state: present
+        update_cache: true
+
+    
+    - name: start and enable httpd 
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+    
+    - name: open firewall 
+      ansible.posix.firewalld:
+        port: 8081/tcp
+        permament: true
+        state: enabled
+
+    - name: copy a prepared file 
+      ansible.builtin.copy:
+        src: index.html
+        dest: /va/www/html/
+        mode: 0644
+

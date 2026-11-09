@@ -1,0 +1,27 @@
+groups:
+  - name: infra-alerts
+    rules:
+      - alert: HighDiskUsage
+        # TODO: fire when a filesystem is over 85% used, sustained for 5 minutes.
+        # Metrics available: node_filesystem_avail_bytes, node_filesystem_size_bytes
+        # (both labeled by instance, mountpoint, fstype — exclude fstype
+        # "tmpfs" and "overlay", they're not real disks).
+        expr: TODO
+        for: TODO
+        labels:
+          severity: TODO
+        annotations:
+          summary: TODO
+          description: TODO
+
+      - alert: InstanceDown
+        # TODO: fire when a target has been unreachable for 2 minutes.
+        # Metric available: up (1 = healthy, 0 = scrape failed), labeled by
+        # instance and job.
+        expr: TODO
+        for: TODO
+        labels:
+          severity: TODO
+        annotations:
+          summary: TODO
+          description: TODO

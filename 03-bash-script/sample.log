@@ -1,0 +1,18 @@
+2026-08-27T09:58:00 INFO  service started
+2026-08-27T09:59:10 ERROR old failure before the window - must NOT be counted
+2026-08-27T10:00:05 WARN  slow query 800ms
+2026-08-27T10:01:20 ERROR another old failure - must NOT be counted
+2026-08-27T10:03:00 INFO  heartbeat
+2026-08-27T10:05:45 ERROR yet another old failure - must NOT be counted
+2026-08-27T10:08:12 INFO  heartbeat
+2026-08-27T10:10:00 ERROR old failure right at the edge - must NOT be counted
+2026-08-27T10:12:30 WARN  cache miss
+2026-08-27T10:14:00 INFO  heartbeat
+2026-08-27T10:15:01 ERROR db connection timeout
+2026-08-27T10:16:10 INFO  heartbeat
+2026-08-27T10:16:45 ERROR disk write failed on /data
+2026-08-27T10:17:30 WARN  slow query 1400ms
+2026-08-27T10:18:00 CRITICAL out of memory, restarting worker
+2026-08-27T10:19:12 INFO  heartbeat
+2026-08-27T10:19:50 ERROR upstream returned 502
+2026-08-27T10:20:00 INFO  heartbeat

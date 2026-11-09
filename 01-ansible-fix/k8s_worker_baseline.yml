@@ -1,0 +1,54 @@
+---
+- name: Baseline config for k8s-worker1
+  hosts: k8s-worker1
+  become: true
+  vars:
+    diagnostic_packages:
+      - htop
+      - ncdu
+      - tree
+      - chrony
+
+  tasks:
+    - name: Update apt cache (max 1h old)
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install diagnostic tools
+      ansible.builtin.apt:
+        name: "{{ diagnostic_packages }}"
+        state: present
+
+    # chrony matters here specifically because this node runs etcd/kubelet,
+    # both of which are sensitive to clock drift (TLS cert validation, leases).
+    - name: Ensure chrony is running and enabled
+      ansible.builtin.systemd:
+        name: chrony
+        state: started
+        enabled: true
+
+    - name: Deploy custom MOTD
+      ansible.builtin.template:
+        src: templates/motd.j2
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: "0644"
+      notify: report motd change
+
+    - name: Check root filesystem usage
+      ansible.builtin.command: df -h / --output=pcent
+      register: disk_usage
+      changed_when: false
+      tags: [report]
+
+    - name: Show disk usage
+      ansible.builtin.debug:
+        msg: "Root filesystem usage on {{ inventory_hostname }}: {{ disk_usage.stdout_lines[-1] }}"
+      tags: [report]
+
+  handlers:
+    - name: report motd change
+      ansible.builtin.debug:
+        msg: "MOTD updated on {{ inventory_hostname }}"

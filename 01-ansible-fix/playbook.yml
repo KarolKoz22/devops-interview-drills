@@ -1,0 +1,38 @@
+---
+- name: Configure nginx reverse proxy
+  hosts: practice
+  become: true
+  handlers:
+    - name: Restart nginx
+      systemd:
+        name: nginx
+        state: restarted 
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: true
+    - name: Deploy site config
+      template:
+        src: files/nginx.conf.j2
+        dest: /etc/nginx/sites-available/app.conf
+      notify: Restart nginx
+    - name: Enable site
+      file:
+        src: /etc/nginx/sites-available/app.conf 
+        dest: /etc/nginx/sites-enabled/app.conf
+        state: link
+      notify: Restart nginx
+
+    - name: Remove default site
+      file: 
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: Restart nginx
+
+    - name: Ensure nginx is enabled and running
+      systemd:
+        name: nginx
+        enabled: true
+        state: started 

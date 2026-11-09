@@ -1,0 +1,14 @@
+2026-09-10T08:12:01 10.0.0.5 - - "GET /api/users HTTP/1.1" 200 512
+2026-09-10T08:12:03 10.0.0.5 - - "GET /api/orders HTTP/1.1" 200 1024
+2026-09-10T08:12:05 10.0.0.7 - - "POST /api/checkout HTTP/1.1" 503 89
+2026-09-10T08:12:08 10.0.0.9 - - "GET /api/inventory HTTP/1.1" 500 200
+2026-09-10T08:12:10 dockerd: container app_web_1 restart detected, exit code 137
+2026-09-10T08:12:15 10.0.0.3 - - "GET /health HTTP/1.1" 200 20
+2026-09-10T08:12:20 10.0.0.4 - - "GET /api/products HTTP/1.1" 502 150
+2026-09-10T08:12:25 10.0.0.4 - - "GET /api/products HTTP/1.1" 502 150
+2026-09-10T08:12:30 dockerd: container app_worker_1 died unexpectedly
+2026-09-10T08:12:35 10.0.0.6 - - "GET /api/cart HTTP/1.1" 200 300
+2026-09-10T08:12:40 10.0.0.6 - - "POST /api/payment HTTP/1.1" 500 95
+2026-09-10T08:12:45 kubelet: container app_web_2 OOMKilled, restarting
+2026-09-10T08:12:50 10.0.0.2 - - "GET /api/status HTTP/1.1" 200 40
+2026-09-10T08:12:55 10.0.0.2 - - "GET /api/reports HTTP/1.1" 504 60

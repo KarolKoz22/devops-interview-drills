@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  web:
+    image: my-web:1.0
+    ports:
+      - "8080:80"
+    networks:
+      - my-app
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+  api:
+    image: hashicorp/http-echo:1.0
+    command: ["-text=hello from api", "-listen=:5000"]
+    networks:
+      - my-app
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+  
+networks:
+  my-app:
+    driver: overlay 

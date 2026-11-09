@@ -1,0 +1,9 @@
+---
+- name: Create user
+  hosts: all 
+  tasks: 
+    - name: Create user {{ myuser }}
+      ansible.builtin.user:
+        name: "{{ myuser }}"
+        shell: /bin/bash
+
